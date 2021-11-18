@@ -27,11 +27,13 @@ int main() {
 	//Объявление переменных
 
 	for (int i = 1; i < text.size(); i++) {
-		if (((int)text[i] < 65) && ((int)text[i] != 32) && (((int)text[i - 1] * (int)text[i + 1]) >= 65 * 65)) {
+		if (((int)text[i] < 65) && ((int)text[i] != 32) && (((int)text[i - 1] >= 65 && (int)text[i + 1] >= 65) || ((int)text[i - 1] >= 65 && (int)text[i + 1] < 65 && (int)text[i + 1] > 32) || ((int)text[i - 1] < 65 && (int)text[i + 1] >= 65 && (int)text[i - 1] > 32))) {
 			std::cout << "The punctuation mark should not be inside the word, two punctuation marks should not stand in a row before of after word, enter string again: ";
 			std::cout << std::endl;
+			std::cout << i;
 			std::cout << "Enter your string: ";
 			std::getline(std::cin, text);
+			i = 0;
 		}
 	}
 	//Проверка на некорректный ввод
