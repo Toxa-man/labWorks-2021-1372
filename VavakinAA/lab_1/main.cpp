@@ -2,12 +2,21 @@
 #include <string>
 #include <vector>
 
+// checking for punctuation marks
+
+bool is_punctuation(char ch) {
+	if (ch == ',' || ch == '!' || ch == '?' || ch == '.' || ch == ' ')
+		return true;
+	else
+		return false;
+}
+
 // counting sum of ASCII chars
 
 int sum_count(std::string word) {
 	int sum = 0;
 	
-	if (word[0] == ',' || word[0] == '!' || word[0] == '?' || word[0] == '.' || word[0] == ' ')
+	if (is_punctuation(word[0]))
 		return sum;
 	for (int i = 0; i < word.length(); i++) {
 		sum += int(word[i]);
@@ -28,7 +37,7 @@ int main()
 	// parsing sentence into words
 
 	while (i < sentence.length()) {
-		while (sentence[i] != ',' && sentence[i] != '!' && sentence[i] != '?' && sentence[i] != '.' && sentence[i] != ' ' && sentence[i] != '\0') {
+		while (!is_punctuation(sentence[i]) && sentence[i] != '\0') {
 			word += sentence[i];
 			i++;
 		}
@@ -38,7 +47,7 @@ int main()
 			word.clear();
 		}
 
-		while (sentence[i] == ',' || sentence[i] == '!' || sentence[i] == '?' || sentence[i] == '.' || sentence[i] == ' ') {
+		while (is_punctuation(sentence[i])) {
 			word += sentence[i];
 			i++;
 		}
