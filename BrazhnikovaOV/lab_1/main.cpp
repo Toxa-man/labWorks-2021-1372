@@ -36,7 +36,7 @@ vector<int> sum_ch(string sentence)
             chislo += character;
             
         }
-        else if(character == ' '){
+        else if((character == ' ') & (chislo != 0)){
             sum.push_back(chislo);
             chislo = 0;
         }
