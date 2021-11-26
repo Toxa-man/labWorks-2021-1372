@@ -1,8 +1,6 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include <algorithm>
-
 
 
 int main() {
@@ -10,15 +8,18 @@ int main() {
 	std::getline(std::cin, s);
 	int sum = 0;
 	int slov = 0;
+	int k_slov = 0;
 	s += ".";
 	std::string* slova;
-
+	int znak = 0;
+	
 	for (int i : s) {
 		if ((i == (int)' ') || (i == (int)'.') || (i == (int)',') || (i == (int)'!') || (i == (int)'?')) {
-			continue;
+			znak++;
 		}
 		slov++;
 	}
+	
 	slova = new std::string[slov];
 	std::string temp = "";
 	std::vector<int> acs;
@@ -61,34 +62,30 @@ int main() {
 	}
 	std::string res = "";
 	int res_c;
-	res_c = 0;
-	int k;
-	k = 1;
-	std::string hh;
+	std::vector <int> vector;
+	for (int i = 0; i < acs.size(); i++) {
+		if (acs[i] != 0) {
+			vector.push_back(acs[i]);
+		}
+	}
+	
+	res_c = (int) abs((double) vector.size() - (double) znak + 1);
 
-	hh = "";
-
-	for (int i : s) {
-		if ((i == (int)' ') || (i == (int)'.') || (i == (int)',') || (i == (int)'!') || (i == (int)'?')) {
-
-			if (k == 1) {
-				hh = slova[res_c + 2];
-				res += hh;
-				hh = " ";
-				k--;
-
-			}
-			if (k == 0) {
-				res += (char)i;
-				k++;
-			}
-
-			res_c++;
-
+	for (int i = 0; i < s.length(); i++) {
+		if ((s[i] == (int)' ') || (s[i] == (int)'.') || (s[i] == (int)',') || (s[i] == (int)'!') || (s[i] == (int)'?')) {
+			res += s[i];
+			continue;
 
 		}
-
-
+		if ((s[i+1] == (int)' ') || (s[i+1] == (int)'.') || (s[i+1] == (int)',') || (s[i+1] == (int)'!') || (s[i+1] == (int)'?')) {
+			
+			i++;
+			
+			res_c++;
+			res += slova[res_c];
+			res += s[i];
+		}
+		
 	}
 
 	res = res.substr(0, res.size() - 1);
