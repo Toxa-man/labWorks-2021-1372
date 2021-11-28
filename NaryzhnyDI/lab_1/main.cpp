@@ -1,4 +1,4 @@
-main.cpp
+// The code is written in Сlion (IDE)
 #include <iostream>
 #include <vector>
 #include <string>
@@ -13,17 +13,7 @@ bool checking(char symbol){
         return false;
     }
 }
-// By diapason, we check either it's a punct. mark or it's a word
-int Ascii(string the_word){
-    int count_summa = 0;
-    if (the_word[0] == ',' || the_word[0] == '!' || the_word[0] == '?' || the_word[0] == '.' || the_word[0] == ' ')
-        return count_summa;
-    for (int i = 0; i < the_word.length(); i++) {
-        count_summa += int(the_word[i]);
-    }
-    return count_summa;
-}
-// This function is made to sum Ascii of the sentence's words. It determines symbols and punctuation marks
+// By the stated diapason, the bool function "checking" returns true (1) in case of a letter
 
 int main() {
     vector<string> words;
@@ -34,48 +24,57 @@ int main() {
     a = 0;
     cout << "Please, write any sentence below you'd like to: " << endl;
     getline(cin, str);
-    b = str.size();
-    while ((checking(str[a]) == 1) && (a < b)){
-        int so = 0;
-        do {
-            the_word += str[a];
-            so += int(str[a]);
-            a++;
-        } while ((checking(str[a]) == 1) && (a < b));
-        words.push_back(the_word); // putting our words here
-        the_word.clear();
-        znach.push_back(so);
+    b = str.length();
+    while(a<b){
+        while ((checking(str[a]) == 1) && (a < b)) {
+            int so = 0;
+            do {
+                the_word += str[a];
+                so += str[a];
+                a++;
+            } while ((checking(str[a]) == 1) && (a < b));
+            words.push_back(the_word); // Here I put the user's word into the vector named "words"
+            the_word.clear();
+            znach.push_back(so);
+        }
+        while ((checking(str[a]) != 1) && (a < b)) {
+            do {
+                the_word += str[a];
+                a++;
+            } while ((checking(str[a]) == 0) && (a < b));
+            ok.push_back(the_word); //Here I put the user's punctuation symbol into the vector named "ok"
+            the_word.clear();
 
-        a++;
-    }
-    while ((checking(str[a]) != 1) && (a < b)) {
-        do {
-            the_word += str[a];
-            a++;
-        } while ((checking(str[a]) == 0) && (a < b));
-        words.push_back(the_word); //putting our symbols here
-        the_word.clear();
-
-        a++;
-
+        }
     }
 
+// I've used the Bubble sort
     for (int i = 0; i < words.size(); i++) {
-        for (int j = 0; j< words.size()-1; j++) {
+        for (int j = 0; j < words.size() - 1; j++) {
             if (znach[j] > znach[j + 1]) {
-                int b = znach[j]; 
-                znach[j] = znach[j + 1]; 
-                znach[j + 1] = b; 
-                string a = words[j]; 
+                int b = znach[j];
+                znach[j] = znach[j + 1];
+                znach[j + 1] = b;
+                string a = words[j];
                 words[j] = words[j + 1];
                 words[j + 1] = a;
             }
         }
     }
-    for (int i= 0; i< words.size();i++){
-        cout << words[i];
-    }
-    return 0;
+        if(words.size()==ok.size()){
+            for (int i = 0; i < words.size(); i++){
+                cout<<words[i]<<ok[i];
+            }
+        }
+        else{
+            int a;
+            for (int i = 0; i < ok.size(); i++){
+                cout<<words[i]<<ok[i+1];
+                a=i;
+            }
+            cout << words[a+1];
+        }
+
 }
 
 
