@@ -3,17 +3,17 @@
 #include <vector> 
 #include <algorithm>
 using namespace std;
-vector<string> single_words(string sentence)
+vector<string> single_words(const string &sentence)
 {
     vector<string> word_vector;
     string result_word;
-    for (char& character : sentence)
+    for (const char& character : sentence)
     {
         if ((character != ' ')  && (character!='?') && (character != ',') && (character != '.') && (character != '!'))  
         {
             result_word += character;
         }
-        else if ((character == ' ') && (result_word!="")) {
+        else if (((character == ' ') || (character == '?') || (character == ',') || (character == '.') || (character == '!')) && (result_word!="")) {
             word_vector.push_back(result_word);
             result_word = "";
         }
@@ -23,20 +23,20 @@ vector<string> single_words(string sentence)
     }
     return(word_vector);
 }
-vector<int> sum_ch(string sentence)
+vector<int> sum_ch(const string &sentence)
 {
 
 
     vector <int> sum;
     int chislo=0;
-    for (char& character : sentence)
+    for (const char& character : sentence)
     {   
         if ((character != ' ') && (character != 63) && (character != ',') && (character != '.') && (character != '!'))
         {
             chislo += character;
             
         }
-        else if((character == ' ') & (chislo != 0)){
+        else if(((character == ' ') || (character == '?') || (character == ',') || (character == '.') || (character == '!')) & (chislo != 0)){
             sum.push_back(chislo);
             chislo = 0;
         }
@@ -44,11 +44,11 @@ vector<int> sum_ch(string sentence)
     sum.push_back(chislo);
     return(sum);
 }
-vector<string> signs(string sentence)
+vector<string> signs(const string &sentence)
 {
     vector <string> vector_signs;
     string result_sign="";
-    for (char& character : sentence)
+    for (const char& character : sentence)
     {
         if ((character == ' ') || (character == 63) || (character == ',') || (character == '.') || (character == '!'))
         {   
@@ -90,3 +90,4 @@ int main() {
          m++;
      } 
  }
+}
