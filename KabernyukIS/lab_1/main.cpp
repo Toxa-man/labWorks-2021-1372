@@ -2,11 +2,11 @@
 #include <string>
 
 
-int sumAscii(std::string a) {
+int sumAscii(const std::string sum_of_letter) {
 	int count = 0;
-	for (int i = 0; i < a.size(); i++) {
-		if ((int)a[i] >= 65) {
-			count += (int)a[i];
+	for (int i = 0; i < sum_of_letter.size(); i++) {
+		if (sum_of_letter[i] >= 'A') {
+			count += (int)sum_of_letter[i];
 		}
 		else {
 			count = 0;
