@@ -1,4 +1,4 @@
-﻿#include <vector>
+#include <vector>
 #include <string>
 #include <iostream>
 using std::cin;
@@ -7,9 +7,9 @@ using std::string;
 using std::endl;
 int main() {
 	std::vector<string>Mass_slov;
-	int k = 0;
+	int index_Mass_slov = 0;
 	std::vector<string>Mass_symbols;
-	int g = 0;
+	int index_Mass_symbols = 0;
 	string str;
 	string slovo;
 	slovo = "";
@@ -25,9 +25,9 @@ int main() {
 			slovo.push_back(str[i]);	// в текущее слово добавляем элемент строки,если это не символы (до тех пор,пока не встретиться символ) 
 			if (symbols != "") {
 				for (int p = 0; p < symbols.size(); ++p) {
-					Mass_symbols[g].push_back(symbols[p]); // в p-ый индекс массива символо запихиваем текущий набор символов 
+					Mass_symbols[index_Mass_symbols].push_back(symbols[p]); // в p-ый индекс массива символо запихиваем текущий набор символов 
 				}
-				g++;						// передвигаемся в (g+1) индекс массива символов
+				index_Mass_symbols++;						// передвигаемся в (index_Mass_symbols + 1) индекс массива символов
 				symbols = "";				// обнуляем набор символом
 			}
 		}
@@ -35,22 +35,22 @@ int main() {
 			symbols.push_back(str[i]);		// в текущий набор символов добавляем элемент строки,если это символ (до тех пор,пока  встречается символ)
 			if (slovo != "") {
 				for (int j = 0; j < slovo.size(); ++j) {
-					Mass_slov[k].push_back(slovo[j]);				 // в k-ый индекс массива слов запихиваем посимвольно текущее слово
+					Mass_slov[index_Mass_slov].push_back(slovo[j]);				 // в index_Mass_slov -ый индекс массива слов запихиваем посимвольно текущее слово
 				}
-				k++;								// передвигаемся в (k+1) индекс массива слов
+				index_Mass_slov++;								// передвигаемся в (index_Mass_slov + 1) индекс массива слов
 				slovo = "";                       // обнуляем текущее слово
 			}
 		}
 	}
 	if (slovo != "") {
 		for (int j = 0; j < slovo.size(); ++j) {
-			Mass_slov[k].push_back(slovo[j]);
+			Mass_slov[index_Mass_slov].push_back(slovo[j]);
 		}
 	}
 
 	if (symbols != "") {
 		for (int j = 0; j < symbols.size(); ++j) {
-			Mass_symbols[k].push_back(symbols[j]);
+			Mass_symbols[index_Mass_slov].push_back(symbols[j]);
 		}
 	}
 	std::vector<int>Sums;
