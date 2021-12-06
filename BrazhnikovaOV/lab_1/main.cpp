@@ -65,7 +65,7 @@ vector<string> signs(const string &sentence)
 int main() {
     string sentence;
     int m = 0;
-    cout << "Please enter your sentence. Remember: use only symbols((A...Z) or (a...z)) and signs ('!', '.', ',' ,'?') for correct work of program\n";
+    cout << "Please enter your sentence. Remember: use only symbols((A...Z) or (a...z)) and signs ('!', '.', ',' ,'?') for correct \nwork of program\n";
     getline(cin, sentence);
     vector<string> result = single_words(sentence);
     vector<int> otbor = sum_ch(sentence);
@@ -82,12 +82,12 @@ int main() {
             }
         }
     }
-     for (int i = 0; i<result.size(); i++) {
-
-     cout << result[i];
-     if (ready_sign[m] > "") {// ( m <= ready_sign.size())
-         cout << ready_sign[m];
-         m++;
-     } 
- }
+   cout << "The result is:\n";
+   for (int i = 0; i<result.size(); i++) {
+       cout << result[i];
+       if (ready_sign[m] > "") {// ( m <= ready_sign.size())
+           cout << ready_sign[m];
+           m++;
+       } 
+   }
 }
