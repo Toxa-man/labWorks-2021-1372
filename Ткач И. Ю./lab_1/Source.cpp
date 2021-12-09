@@ -1,100 +1,64 @@
-
-
-#include <iostream>
-#include <string>
-#include <vector>
+#include<iostream>
+#include<string>
+#include<vector>
 
 using namespace std;
 
-int isExistLetter(string str) //функция проверки есть ли в слове буква(состоит ли оно из букв или нет)
-{
-	for (auto item : str)
-	{
-		if (item >= 65 && item <= 90 || item >= 97 && item <= 122) return 1;
-	}
-	return 0;
-}
-   
-struct Word     //структура типа Word , хранит данные о слове
-{
-	string word;      //само слово
-	int weight = -1;    //его вес(сумма аски кодов букв)
-	bool isWord = false;       //флажок для проверки буквенное слово или символьное
+struct  Word {
+	int summa;
+	string word;
 };
+int main() {
+	string stroka;
+	vector <string>znaki; //РІРµРєС‚РѕСЂ РґР»СЏ Р·РЅР°РєРѕРІ РїСЂРµРї
+	vector <Word> word; //РІРµРєС‚РѕСЂ РґР»СЏ СЃР»РѕРІ
+	cout << "Please enter stroky, consist of a-z or A-Z, and also you can use .,!?" << endl;
+	getline(cin, stroka);
+	int j = 0;
+	int i;
+	i = 0;
+	int c; //СЌР»РµРјРµРЅС‚ СЃС‚СЂРѕРєРё
+	while (i < stroka.size()) {
+		string isBykv = "";
+		string znachki = "";
+		Word c; //СЌР»РµРјРµРЅС‚ СЃС‚СЂРѕРєРё
+		int sum = 0;
+		if (((int(stroka[i]) >= 'A' && int(stroka[i]) <= 'Z') || (int(stroka[i]) >= 'a' && int(stroka[i]) <= 'z')) && i < stroka.size()) {
+			do {
+				isBykv += stroka[i];
+				sum += int(stroka[i]);
+				++i; //РІРѕР·РІСЂР°С‰Р°РµС‚ СѓРІРµР»РёС‡РµРЅРЅРѕРµ Р·РЅР°С‡РµРЅРёРµ
+			} while (((int(stroka[i]) >= 'A' && int(stroka[i]) <= 'Z') || (int(stroka[i]) >= 'a' && int(stroka[i]) <= 'z')) && i < stroka.size()); {
+				c.word = isBykv;
+				c.summa = sum;
+				word.push_back(c);
 
-void Sorting(vector<Word>& sortedWeight)  //функция сортирующая массив по весам(сортировка методом пузырька, не оптимизированная)
-{
-	Word temp;
-	for (int i = 0; i < sortedWeight.size() - 1; i++)
-	{
-		if (!sortedWeight[i].isWord) continue;    //пропускаем слова, которые не состоят из букв(они должны остаться на своем месте)
-		for (int j = i + 1; j < sortedWeight.size(); j++)
-		{
-			if (!sortedWeight[j].isWord) continue;         //пропускаем слова, которые не состоят из букв(они должны остаться на своем месте)
-			if (sortedWeight[i].weight > sortedWeight[j].weight)
-			{
-				temp = sortedWeight[i];
-				sortedWeight[i] = sortedWeight[j];
-				sortedWeight[j] = temp;
+
+			}
+			if ((stroka[i] == '.' || stroka[i] == ',' || stroka[i] == '!' || stroka[i] == '?' || stroka[i] == ' ') && (i < stroka.size())) {
+				do {
+					znachki += stroka[i]; //РІ РІРµРєС‚РѕСЂ РґРѕР±Р°РІРёР»Рё Р·РЅР°Рє РїСЂРµРї
+					++i;
+
+				} while ((stroka[i] == '.' || stroka[i] == ',' || stroka[i] == '!' || stroka[i] == '?' || stroka[i] == ' ') && (i < stroka.size()));
+				znaki.push_back(znachki); //РІСЃС‚Р°РІРёР»Рё Р·РЅР°Рє РІ РІРµРєС‚РѕСЂ
+			}
+
+		}
+
+	}
+	for (int i = 0; i < word.size(); i++) {
+		for (int j = 0; j < word.size() - 1; j++) {
+			if (word[j].summa > word[j + 1].summa) {
+				Word a;
+				a = word[j];
+				word[j] = word[j + 1];
+				word[j + 1] = a;
 			}
 		}
-
 	}
-}
-
-int main()
-{
-	string str;
-	getline(cin, str);
-	string temp;     //временная переменная для хранения слова
-	//cout << int(' ');
-	vector<Word> sortedWords;      //вектор(массив) данных типа Word
-	for (auto item : str)
-	{
-		if (item == '.' || item == ',' || item == '!' || item == '?' || item == ' ')
-		{
-			if (!isExistLetter(temp)) temp += item;      //если слово не из букв то собираем его дальше
-
-			else               //иначе оно из букв и закончилось(в конце появился пробел и т.д) значит добавляем его в массив
-			{
-				int w0 = 0;
-				for (auto ch : temp)//считаем его вес
-				{
-					w0 += (int)ch;
-				}
-				sortedWords.push_back(Word{ temp, w0, true });
-				temp = item;
-			}
-		}
-
-
-		else if (item >= 65 && item <= 90 || item >= 97 && item <= 122)    //иначе если это буква то
-		{
-			//если слово не из букв то это конец слова из символов и мы добавляем его в наш массив(вес = -1, признак того что он нам не нужен)
-			//флажок отрицательный, потому что это не буквенное слово а символьное)
-			if (!isExistLetter(temp) && temp.size() > 0) { sortedWords.push_back(Word{ temp, -1, false }); temp = item; }
-
-			else temp += item;//иначе собираем буквенное слово(продолжаем собирать)
-		}
+	for (int i = 0; i < znaki.size(); i++) { 
+		cout << word[i].word << znaki[i]; //С„СЂР°Р·Р° Р·Р°РєР°РЅС‡РёРІР°РµС‚СЃСЏ Р·РЅР°РєРѕРј РїСЂРµРїРёРЅР°РЅРёСЏ   word[i] РІРµРєС‚РѕСЂ СЃР»РѕРІ, word -РёР· СЃС‚СЂСѓРєС‚СѓСЂС‹
 	}
-	//след. кусок кода дублирует вещи которые уже были , потому что когда мы доходим до конца строки, то не добавляем слово которые у нас могло остаться во временной переменной
-	if (temp.size() != 0 && !isExistLetter(temp)) sortedWords.push_back(Word{ temp, -1, false });
-	if (temp.size() != 0 && isExistLetter(temp))
-	{
-		int w0 = 0;
-		for (auto ch : temp)
-		{
-			w0 += (int)ch;
-		}
-		sortedWords.push_back(Word{ temp, w0, true });
-	}
-
-	Sorting(sortedWords);
-	//передаем наш массив(вектор) в функцию сортировки по ссылке разумеется
-	for (auto item : sortedWords)
-		
-	{
-		cout << item.word;
-	}
-	return 0;
+	
 }
