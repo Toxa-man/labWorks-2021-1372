@@ -76,14 +76,14 @@ double chislo_or_skobki(simvol simv, string& stroka, int& index)
 	switch (simv.symbol)
 	{
 	case chislo:
-		resultat = int(simv.str_symbol)-48;
+		resultat = int(simv.str_symbol)- '0';
 		while (simv.symbol == chislo)
 		{
 			simv = get_next_simv(stroka, index);
 			switch (simv.symbol)
 			{
 			case chislo:
-				resultat = resultat*10 +(int(simv.str_symbol) - 48);
+				resultat = resultat*10 +(int(simv.str_symbol) - '0');
 				break;
 			default:
 				--index;
@@ -148,7 +148,7 @@ double proizvedenie(simvol simv, string& stroka, int& index)
 		}
 		else
 		{
-
+			cout << "Вы попытались поделить на ноль. Мы пропустили этот шаг." <<endl;
 		}
 	default:
 		--index;
@@ -253,12 +253,15 @@ int main()
 				stroka_bez_probelov = stroka_bez_probelov.substr(0, i) + '*' + stroka_bez_probelov.substr(i);
 			}
 		}
-
-		if (!(proverka_na_chislo(stroka_bez_probelov[1]) || stroka_bez_probelov[1] == '-'  || stroka_bez_probelov[1] == '('))
+		
+		if (!(proverka_na_chislo(stroka_bez_probelov[1]) || stroka_bez_probelov[1] == '-'  || stroka_bez_probelov[1] == '(' || stroka_bez_probelov[1] == '+'))
 		{
 			count_nachalo_stroki++;
 		}
-		
+		if (stroka_bez_probelov[1] == '+')
+		{
+			stroka_bez_probelov = ' ' + stroka_bez_probelov.substr(2);
+		}
 		for (int i = 1;i < size(stroka_bez_probelov);i++)
 		{
 			if ((stroka_bez_probelov[i] == '+' || stroka_bez_probelov[i] == '-' || stroka_bez_probelov[i] == '/' 
@@ -304,7 +307,13 @@ int main()
 				count_null++;
 			}
 			if (stroka_bez_probelov[i] == '.') {
-				if (!(proverka_na_chislo(stroka_bez_probelov[i + 1]) && stroka_bez_probelov[i] == '.' && proverka_na_chislo(stroka_bez_probelov[i + 1])))
+				if (proverka_na_chislo(stroka_bez_probelov[i - 1]) && stroka_bez_probelov[i] == '.'&& (stroka_bez_probelov[i + 1]=='+'|| stroka_bez_probelov[i + 1] == '-' || 
+					stroka_bez_probelov[i + 1] == '*' || stroka_bez_probelov[i + 1] == '/' || stroka_bez_probelov[i + 1] == '(' || stroka_bez_probelov[i + 1] == ')'))
+				{
+					stroka_bez_probelov = stroka_bez_probelov.substr(0, i+1) + '0' + stroka_bez_probelov.substr(i+1);
+					cout << "Обращаем ваше внимание на то, что в вещественном числе, которое вы ввели, отсутствует дробная часть.\nВ таком случае мы считаем число целым." << endl;
+				}
+				else if (!(proverka_na_chislo(stroka_bez_probelov[i - 1]) && stroka_bez_probelov[i] == '.' && proverka_na_chislo(stroka_bez_probelov[i + 1])))
 				{
 					count_tochki++;
 				}
@@ -343,13 +352,16 @@ int main()
 		{
 			cout << "В вашем выражении встречается 2 или более подряд идущих арифметических знака (+,-,/,*). Пожалуйста, исправьте выражение." << endl;
 		}
+		if (count_tochki)
+		{
+			cout << "Точка в вашем выражении используется некорректно. Она должна использоваться только при написании дробных чисел.\nПожалуйста, исправьте выражение." << endl;
+		}
 		} while (count_postoronnie_simv || count_lishnie_znaki || count_skobki || count_null || count_nachalo_stroki||count_chisla|| count_tochki|| count_pystie_skobki);
 	stroka_bez_probelov = stroka_bez_probelov.substr(1)+'\n';
 	double result = 0;
 	simv = get_next_simv(stroka_bez_probelov,index);
 	result = summa(simv, stroka_bez_probelov, index);
 	cout << "Полученный результат: "<<result;
-	
 	if (result != int(result))
 	{
 		cout << "\nP.S.Если вы использовали дробные числа или арифметический знак деления в выражении, результат может оказаться неточным в связи с утерей данных. \nТакая неприятность возможна из-за используемого типа double." <<endl ;
