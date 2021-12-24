@@ -2,64 +2,67 @@
 #include <string>
 #include <vector>
 
+struct Word {
+	std::string word;
+	int code = 0;
+};
+
 int main() {
-	std::string in_str; // входная строка
+	std::string in_str; // РІС…РѕРґРЅР°СЏ СЃС‚СЂРѕРєР°
 	std::cout << "Write a sentance: ";
 	std::getline(std::cin, in_str);
-	in_str = in_str + " "; // пробел вконце для упрощения условий приработе со строкой
+	in_str = in_str + " "; // РїСЂРѕР±РµР» РІРєРѕРЅС†Рµ РґР»СЏ СѓРїСЂРѕС‰РµРЅРёСЏ СѓСЃР»РѕРІРёР№ РїСЂРёСЂР°Р±РѕС‚Рµ СЃРѕ СЃС‚СЂРѕРєРѕР№
 
-	std::vector <std::string> word; // массив для слов из латинских букв
-	std::vector <int> summ_code; // массив для сумм кодов элементов массива word
+	std::vector <Word> word_s;
+	Word temp;
 
-	int c_word = 0; // количество слов
-	std::string curr; // переменная для хранения символов, идущих до пробела в строке str
-	curr = in_str[0];
+	std::string curr; // РїРµСЂРµРјРµРЅРЅР°СЏ РґР»СЏ С…СЂР°РЅРµРЅРёСЏ СЃРёРјРІРѕР»РѕРІ, РёРґСѓС‰РёС… РґРѕ РїСЂРѕР±РµР»Р° РІ СЃС‚СЂРѕРєРµ str
+	curr = in_str[0]; // РїРµСЂРІС‹Р№ СЃРёРјРІРѕР» РЅРµ Р±СѓРєРІР°
 
 	for (int i = 1; i < in_str.length(); i++) {
-		if (in_str[i] == ' ' && curr != "\0") { //при встрече пробела передаем значение curr в массив word и отводим место в массиве summ_code для суммы кодов символов строки word[i]
-			word.push_back(curr);
-			summ_code.push_back(0);
+		if (in_str[i] == ' ' && curr != "\0") { //РїСЂРё РІСЃС‚СЂРµС‡Рµ РїСЂРѕР±РµР»Р° РїРµСЂРµРґР°РµРј Р·РЅР°С‡РµРЅРёРµ curr РІ РјР°СЃСЃРёРІ word Рё РѕС‚РІРѕРґРёРј РјРµСЃС‚Рѕ РІ РјР°СЃСЃРёРІРµ summ_code РґР»СЏ СЃСѓРјРјС‹ РєРѕРґРѕРІ СЃРёРјРІРѕР»РѕРІ СЃС‚СЂРѕРєРё word[i]
+			temp.word = curr;
 
+			if (isalpha(curr[0])) {
+				for (int j = 0; j < curr.length(); j++) {
+					temp.code += (int)curr[j];
+				}				
+			}
+
+			word_s.push_back(temp);
+
+			temp.code = 0;
 			curr.erase(0, i);
-			c_word ++;
 		}
-		if (isalpha(in_str[i])) { curr += in_str[i]; } //копируем элементы строки in_str в строку curr до первого пробела
+		if (isalpha(in_str[i])) { curr += in_str[i]; } //РєРѕРїРёСЂСѓРµРј СЌР»РµРјРµРЅС‚С‹ СЃС‚СЂРѕРєРё in_str РІ СЃС‚СЂРѕРєСѓ curr РґРѕ РїРµСЂРІРѕРіРѕ РїСЂРѕР±РµР»Р°
 	}
 
-	for (int i = 0; i < word.size(); i ++) { // ищем суммы кодов элементов массива word, записываем их в массив summ_code
-		if (isalpha(word[i][0])) {
-			for (int j = 0; j < word[i].length(); j++) {
-				summ_code[i] += (int)word[i][j];
+
+	for (int i = 0; i < word_s.size() - 1; i++) { // РїСЂРё РїРѕРјРѕС‰Рё СЃРѕСЂС‚РёСЂРѕРІРєРё РјР°СЃСЃРёРІР° summ_code СЃРѕСЂС‚РёСЂСѓРµРј РјР°СЃСЃРёРІ word
+		for (int j = i + 1; j < word_s.size(); j++) {
+			if (word_s[i].code > word_s[j].code) {
+
+				temp = word_s[i];
+				word_s[i] = word_s[j];
+				word_s[j] = temp;
+
 			}
 		}
 	}
 
-	for (int i = 0; i < c_word-1; i++) { // при помощи сортировки массива summ_code сортируем массив word
-		for (int j = i+1; j < c_word; j++) {
-			if (summ_code[i] > summ_code[j]) {
+	std::cout << "Your improved sentance: "; // РІС‹РІРѕРґ
+	bool alpha = false; // РїРµСЂРµРјРµРЅРЅР°СЏ РґР»СЏ РїСЂРѕРІРµСЂРєРё РІСЃС‚СЂРµС‡Р°Р»СЃСЏ Р»Рё СЃРёРјРІРѕР» Р»Р°С‚РёРЅСЃРєРѕРіРѕ Р°Р»С„Р°РІРёС‚Р°
+	int num_word = 0; // РїРµСЂРµРјРµРЅРЅР°СЏ РґР»СЏ РїРѕРґСЃС‡РµС‚Р° РІС‹РІРµРґРµРЅРЅС‹С… СЌР»РµРјРµРЅС‚РѕРІ РјР°СЃСЃРёРІР° word
+	for (int i = 0; i < in_str.length(); i++) {
 
-				int c = summ_code[i];
-				summ_code[i] = summ_code[j];
-				summ_code[j] = c;
+		if (isalpha(in_str[i])) { alpha = true; } // РїСЂРѕРІРµСЂСЏРµРј РІСЃС‚СЂРµС‡Р°Р»СЃСЏ Р»Рё СЃРёРјРІРѕР» Р»Р°С‚РёРЅРёС†С‹
+		if (!isalpha(in_str[i]) && alpha) { // РїСЂРё РІСЃС‚СЂРµС‡Рµ СЃ "СЃРїРµС†РёР°Р»СЊРЅС‹Рј" СЃРёРјРІРѕР»РѕРј РёР»Рё РїСЂРѕР±РµР»РѕРј РІ СЃР»СѓС‡Р°Рµ, РµСЃР»Рё РїРµСЂРµРґ РЅРёРј Р±С‹Р»Р° Р»Р°С‚РёРЅРёС†Р°, РІС‹РІРѕРґРёРј СЃР»РѕРІРѕ РёР· Р±СѓРєРІ
 
-				std::string f = word[i];
-				word[i] = word[j];
-				word[j] = f;
-			}
+			std::cout << word_s[num_word].word;
+
+			alpha = false; num_word++;
 		}
-	}
-
-	std::cout << "Your improved sentance: "; // вывод
-	bool f1 = false; // переменная для проверки встречался ли символ латинского алфавита
-	int f2 = 0; // переменная для подсчета выведенных элементов массива word
-	for (int i = 0; i < in_str.length(); i++) { 
-
-		if (isalpha(in_str[i])) { f1 = true; } // проверяем встречался ли символ латиницы
-		if (!isalpha(in_str[i]) && f1) { // при встрече с "специальным" символом или пробелом в случае, если перед ним была латиница, выводим слово из букв
-			std::cout << word[f2];
-			f1 = false; f2++;
-		}	
-		if (!isalpha(in_str[i])) { std::cout << in_str[i]; } // выводим "специальный" символ или пробел
+		if (!isalpha(in_str[i])) { std::cout << in_str[i]; } // РІС‹РІРѕРґРёРј "СЃРїРµС†РёР°Р»СЊРЅС‹Р№" СЃРёРјРІРѕР» РёР»Рё РїСЂРѕР±РµР»
 	}
 
 }
