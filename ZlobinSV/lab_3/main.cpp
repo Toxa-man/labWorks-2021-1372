@@ -26,44 +26,44 @@ public:
         }
         else {
             capacity = size * 2;
-            int* temp = data;
+            int* tmp = data;
             data = new int[capacity];
             for (int i = 0; i < size; i++) {
-                data[i] = temp[i];
+                data[i] = tmp[i];
             }
             data[size] = val;
             size++;
-            delete[] temp;
+            delete[] tmp;
         }
     }
     void insert(int num, int val) {
         if (num < size) {
             if (size < capacity) {
-                int* temp = data;
+                int* tmp = data;
                 data = new int[capacity];
                 for (int i = 0; i < num; i++) {
-                    data[i] = temp[i];
+                    data[i] = tmp[i];
                 }
                 data[num] = val;
                 size++;
                 for (int i = num+1; i < size; i++) {
-                    data[i] = temp[i-1];
+                    data[i] = tmp[i-1];
                 }
-                delete[] temp;
+                delete[] tmp;
             }
             else {
                 capacity = size * 2;
-                int* temp = data;
+                int* tmp = data;
                 data = new int[capacity];
                 for (int i = 0; i < num; i++) {
-                    data[i] = temp[i];
+                    data[i] = tmp[i];
                 }
                 data[num] = val;
                 size++;
                 for (int i = num+1; i < size; i++) {
-                    data[i] = temp[i - 1];
+                    data[i] = tmp[i - 1];
                 }
-                delete[] temp;
+                delete[] tmp;
             }
         }
         else if(num == size){
@@ -73,16 +73,16 @@ public:
     }
     void delete_a(int num) {
         if (num < size) {
-                int* temp = data;
+                int* tmp = data;
                 data = new int[capacity];
                 for (int i = 0; i < num; i++) {
-                    data[i] = temp[i];
+                    data[i] = tmp[i];
                 }
                 for (int i = num+1; i < size; i++) {
-                    data[i-1] = temp[i];
+                    data[i-1] = tmp[i];
                 }
                 size--;
-                delete[] temp;
+                delete[] tmp;
         }
         else { cout << "Error, out of vector" << endl; }
     }
