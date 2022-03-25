@@ -98,7 +98,7 @@ public:
     int get_size() {
         return size;
     }
-    void get_data() {
+    void print_data() {
         for (int i = 0; i < size; i++) {
             cout << data[i] << "  ";
         }
@@ -139,7 +139,7 @@ int Get_Size(MyList* head) {
     }
     return size;
 }
-void Get_Data(MyList* head) {
+void Print_Data(MyList* head) {
     MyList* tmp = head;
     while (tmp != nullptr) {
         cout << tmp->data << "  ";
