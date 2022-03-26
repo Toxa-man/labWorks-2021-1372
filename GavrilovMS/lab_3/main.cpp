@@ -158,12 +158,19 @@ public:
 
 	void erase(size_t index) {
 		Node* cur = head;
-		for (size_t i = 0; i < index - 1; i++) {
+		Node* past_node = cur;
+		for (size_t i = 0;  i < index; i++) {
+			past_node = cur;
 			cur = cur->nextadr;
 		}
-		Node* node_to_delete = cur->nextadr;
-		cur->nextadr = cur->nextadr->nextadr;
-		delete node_to_delete;
+		if (index == 0) {
+			head = cur->nextadr;
+			delete cur;
+		}
+		else {
+			past_node->nextadr = cur->nextadr;
+			delete cur;
+		}
 		size--;
 	}
 
