@@ -20,6 +20,13 @@ public:
         delete[] data;
     }
     void push_back(int val) {
+        if (size == 0){
+             size = 1;
+            capacity = size * 2;
+            data = new int[capacity];
+         data[0]=val;
+         }
+        else {
         if (size < capacity) {
             data[size] = val;
             size++;
@@ -34,6 +41,7 @@ public:
             data[size] = val;
             size++;
             delete[] tmp;
+        }
         }
     }
     void insert(int num, int val) {
