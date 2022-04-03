@@ -14,12 +14,20 @@ public:
 	Vector() {                                    //standart constructor
 		data = nullptr;
 		size = 0;
-		all_size = 0;
+		all_size = 2;
+		data = new int[all_size];
 	}
+	
 
 	Vector(const unsigned input_size) {          //create the array of the 'input_size' size
-		all_size = input_size * 1.5;
-		data = new int [all_size];
+		if (input_size == 0) {
+			all_size = 2;
+		}
+		else {
+			all_size = input_size * 1.5;
+		}
+		data = new int[all_size];
+		
 	}
 
 	void push_back(const int last_obj);         //add the 'last_obj' to the end of the array
