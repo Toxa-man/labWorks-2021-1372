@@ -2,10 +2,7 @@
 
 using namespace std;
 
-struct MyType
-{
-    int a;
-};
+using MyType = int;
 
 class MyVector
 {
@@ -15,42 +12,35 @@ class MyVector
    
     MyType NullItem()
     {
-        MyType ItemNull{ 0 };
+        MyType ItemNull{ };
         return ItemNull;
     }
     void PrintOneItem(int index)
     {
-        cout << massiv[index].a;
+        cout << massiv[index];
     }
     void IncreasingTheCapasity()
     {
-        MyType* massivCopy = new MyType[size];
+        capasity = capasity * 2;
+        MyType* massivCopy = new MyType[capasity];
         for (int i = 0;i < size;i++)
         {
             massivCopy[i] = massiv[i];
         }
-        capasity = capasity * 2;
-        massiv = new MyType[capasity];
-        for (int i = 0;i < size;i++)
-        {
-            massiv[i] = massivCopy[i];
-        }
         for (int i = size + 1;i < capasity;i++)
         {
-            massiv[i]=NullItem();
+            massivCopy[i] = NullItem();
         }
-        delete[]massivCopy;
+        delete[] massiv;
+        massiv = massivCopy;
+        massivCopy = 0;
     }
 public:
     MyVector()
     {
         size = 0;
         capasity = 2;
-        massiv = new MyType[capasity];
-        for (int i = 0;i < capasity;i++)
-        {
-            massiv[i]=NullItem();
-        }
+        
     }
     MyVector(int newsize) 
     {
@@ -112,6 +102,15 @@ void MyVector::AddToEnd(MyType item)
     {
         IncreasingTheCapasity();
     }
+    if (massiv == 0)
+    {
+        massiv = new MyType[capasity];
+        for (int i = 0;i < capasity;i++)
+        {
+            massiv[i] = NullItem();
+        }
+    }
+    
         massiv[size] = item;
         ++size;
 }  
@@ -120,22 +119,30 @@ void MyVector::AddByIndex(MyType item,int index)
 {
     if (index < 0)
     {
-        cout << "Мы не можем добавить элемент с индексом " << index << ", так как нумерация элементов в массиве начинается с нуля" << endl;
+       //cout << "Мы не можем добавить элемент с индексом " << index << ", так как нумерация элементов в массиве начинается с нуля" << endl;
         return;
     }
     if (size == 0)
     {
-        cout << "Мы не можем добавить элемент с индексом " << index << ", так как размер вашего массива равен 0" << endl;
+        //cout << "Мы не можем добавить элемент с индексом " << index << ", так как размер вашего массива равен 0" << endl;
         return;
     }
     if (index >= size)
     {
-        cout << "Мы не можем добавить элемент с индексом "<<index<<", так как индекс последнего элемента в вашем массиве "<<size-1<< endl;
+        // << "Мы не можем добавить элемент с индексом "<<index<<", так как индекс последнего элемента в вашем массиве "<<size-1<< endl;
         return;
     }
     if (size-1 == capasity-1)
     {
         IncreasingTheCapasity();
+    }
+    if (massiv == 0)
+    {
+        massiv = new MyType[capasity];
+        for (int i = 0;i < capasity;i++)
+        {
+            massiv[i] = NullItem();
+        }
     }
     for (int i = size;i > index;i--)
     {
@@ -149,17 +156,21 @@ void MyVector::DeleteByIndex(int index)
 {
     if (index < 0)
     {
-        cout << "Мы не можем удалить элемент с индексом " << index << ", так как нумерация элементов в массиве начинается с нуля" << endl;
+        //cout << "Мы не можем удалить элемент с индексом " << index << ", так как нумерация элементов в массиве начинается с нуля" << endl;
         return;
     }
     if (size == 0)
     {
-        cout << "Мы не можем удалить элемент с индексом " << index << ", так как размер вашего массива равен 0" << endl;
+        //cout << "Мы не можем удалить элемент с индексом " << index << ", так как размер вашего массива равен 0" << endl;
         return;
     }
     if (index >= size)
     {
-        cout << "Мы не можем удалить элемент с индексом " << index << ", так как индекс последнего элемента в вашем массиве " << size-1 << endl;
+        //cout << "Мы не можем удалить элемент с индексом " << index << ", так как индекс последнего элемента в вашем массиве " << size-1 << endl;
+        return;
+    }
+    if (massiv == 0)
+    {
         return;
     }
     for (int i = index;i <size;i++)
@@ -174,17 +185,17 @@ MyType* MyVector::GetItem(int index)
 {
     if (index < 0)
     {
-        cout << "Элемента с индексом " << index << " не существует, так как нумерация элементов в массиве начинается с нуля" << endl;
+        //cout << "Элемента с индексом " << index << " не существует, так как нумерация элементов в массиве начинается с нуля" << endl;
         return nullptr;
     }
     if (size == 0)
     {
-        cout << "Элемента с индексом " << index << " не существует, так как размер вашего массива равен 0" << endl;
+        //cout << "Элемента с индексом " << index << " не существует, так как размер вашего массива равен 0" << endl;
         return nullptr;
     }
     if (index >= size)
     {
-        cout << "Элемента с индексом " << index << " не существует, так как индекс последнего элемента в вашем массиве " << size-1 << endl;
+        //cout << "Элемента с индексом " << index << " не существует, так как индекс последнего элемента в вашем массиве " << size-1 << endl;
         return nullptr;
     }
     return &massiv[index];
@@ -194,17 +205,17 @@ void MyVector::FillByIndex(MyType item, int index)
 {
     if (index < 0)
     {
-        cout << "Мы не можем заполнить элемент с индексом " << index << ", так как нумерация элементов в массиве начинается с нуля" << endl;
+        //cout << "Мы не можем заполнить элемент с индексом " << index << ", так как нумерация элементов в массиве начинается с нуля" << endl;
         return;
     }
     if (size == 0)
     {
-        cout << "Мы не можем заполнить элемент с индексом " << index << ", так как размер вашего массива равен 0" << endl;
+       // cout << "Мы не можем заполнить элемент с индексом " << index << ", так как размер вашего массива равен 0" << endl;
         return;
     }
     if (index >= size)
     {
-        cout << "Мы не можем заполнить элемент с индексом " << index << ", так как индекс последнего элемента в вашем массиве " << size-1 << endl;
+        //cout << "Мы не можем заполнить элемент с индексом " << index << ", так как индекс последнего элемента в вашем массиве " << size-1 << endl;
         return;
     }
     massiv[index] = item;
@@ -214,7 +225,7 @@ void MyVector::PrintMyVector()
 {
     if (size == 0)
     {
-        cout << "Размер вашего массива равен 0" << endl;
+       //cout << "Размер вашего массива равен 0" << endl;
         return;
     }
     for (int i = 0;i < size;i++)
@@ -246,7 +257,7 @@ int main()
     }
     MyType* items1;
     items1 = Vector.GetItem(3);
-    if (items1)cout << items1->a << endl;
+    if (items1)cout << items1 << endl;
     Vector.DeleteByIndex(5);
     Vector.PrintMyVector();
     MyType items{ 10 };
@@ -257,4 +268,5 @@ int main()
     Vector.AddToEnd(items);
     Vector.PrintMyVector(); 
     Vector.DeleteByIndex(-4);
+    
 }
