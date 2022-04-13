@@ -130,6 +130,7 @@ public:
 		head = nullptr;
 	}
 	~MyList() {
+		clear();
 	}
 	T& operator[] (const int ind){
 		int counter = 0;
@@ -191,6 +192,14 @@ public:
 			Node <T>* todelete = tmp->adrNext;
 			tmp->adrNext = todelete->adrNext;
 			delete todelete;
+			size--;
+		}
+	}
+	void clear() {
+		while (size) {
+			Node<T>* tmp = head;
+			head = head->adrNext;
+			delete tmp;
 			size--;
 		}
 	}
