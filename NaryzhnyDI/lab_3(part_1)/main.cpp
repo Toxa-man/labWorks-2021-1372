@@ -137,16 +137,14 @@ public:
             cout << "Ваш массив 0-го размера \n";
         }
     }
-    void GetReference(){
-        int temp_a = 0;
-        cout<<"Ссылку какого элемента вы хотите получить?Введите индекс: " << endl;
-        cin >> temp_a;
-        if (temp_a>=0 && temp_a < size) {
-            cout << "элемент: " << arr[temp_a] <<"\nссылка: " << &arr[temp_a] << endl;
+    int& GetReference(int index){
+        if (index>=0 && index < size) {
+            return arr[index];
         }
         else{
             cout <<"Ошибка: вы вышли за диапазон массива. Нумерация элементов массива начинается с 0. Так "
                    "в вашем массиве элементы имеют индексы от 0 до " << size-1 << endl;
+            exit(0);
         }
     }
     void Arr_info() const {
@@ -170,8 +168,8 @@ int main(){
         a.u_push_back();
         a.u_insert();
         a.u_delete();
-        a.GetReference();
         a.Arr_info();
+        cout << a.GetReference(4);
     }
     else {
         cout << "Ошибка: ваш массив не может состоять из отрицательного кол-ва элементов" << endl;
