@@ -19,7 +19,7 @@ public:
 		arr = new Type[max_size];
 	}
 	~vector() {
-		delete arr;
+		delete[] arr;
 	}
 	Type& operator[](size_t index) {
 		if (index < size) {
@@ -46,7 +46,7 @@ public:
 				arr[i] = curarr[i];
 			}
 			arr[size++] = element;
-			delete curarr;
+			delete[] curarr;
 			return;
 		}
 	}
@@ -71,7 +71,7 @@ public:
 				for (size_t i = size; i > index; i--) {
 					arr[i] = curarr[i - 1];
 				}
-				delete curarr;
+				delete[] curarr;
 				arr[index] = element;
 				size++;
 				return;
