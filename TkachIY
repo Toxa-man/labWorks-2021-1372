@@ -1,0 +1,236 @@
+#include <iostream>
+using namespace std;
+
+
+
+class Mass {
+private:
+    int size = 0;
+    int *array = new int[size];
+    int capacity ;
+
+public:
+    void enter_size() {
+
+        cout << "Введите размер массива: " << endl;
+        cin >> size;
+    }
+    void massiv(int* const array, const int size)
+    {
+        for (int i = 0; i < size; i++) {
+
+            array[i] = rand() % 15; //числа от 0 до 15
+
+        }
+    };
+    void push_back_at_the_end(int *&array, int &size,int value) {
+        if (capacity == size) {
+            capacity = size*5;
+            int* array2 = new int[capacity];
+
+            for (int i = 0; i < size; i++) {    //скопировала данные
+                array2[i] = array[i];
+            }
+            array2[capacity] = value;
+            size += 1;
+            delete[]array;//удалили старый указатель
+            array = array2;//присвоили адрес  нового массива
+        }
+        array[size] = value;
+        size += 1;
+    };
+
+    void insert_element(int index, int value) {
+
+        if (index <= size && index > 0) {
+            if (capacity == size) {
+                capacity = size *4;
+                int* array2 = new int[capacity];
+                for (int i = 0; i < size; i++) {
+                    array2[i] =  array[i];
+                }
+                delete[]array;
+                array = array2;
+            }
+
+            for (int i = index; i < size; i++) {
+                array[i + 1]  = array[i];
+            }
+            array[index] =  value;
+            size += 1;
+        }
+    };
+
+    void delete_element(int index) {
+        if (index <= size && index > 0) {
+            if (capacity == size) {
+                capacity = size *2;
+                int* array2 = new int[capacity];
+                for (int i = 0; i < size; i++) {
+                    array2[i] = array[i];
+                }
+                delete[]array;
+                array = array2;
+            }
+            for (int i = index; i < size; i++) {
+                array[i] = array[i - 1];
+            }
+
+            size -= 1;
+        }
+        else {
+            cout << "Ошибка"<<endl;
+        }
+    };
+    void array_size() {
+        cout << "размер массива:" << size << endl;
+    };
+    void Get_the_link() {
+        int index;
+        cout << "Ссылку на какой элемент Вы бы хотели получить? Напишите индекс:" << endl;
+        cin >> index;
+        if (index > 0 && index < size) {
+            cout << "эллементу" << array[index] << "соответствует" << "\t" << &array[index] << endl;
+
+        }
+        else {
+            cout << "Такого элемента в массиве не существует " << endl;
+        }
+    };
+
+    void print() {
+        for (int i = 0; i < size; i++) {
+            cout <<array[i] << endl;
+        }
+    }
+
+    ~Mass() {
+        delete[]array;
+    }
+
+};
+class List 
+{
+
+private:
+    int size;
+    struct Node {
+        Node* next;
+        int value;
+        Node(int value = 0, Node* next = nullptr) {
+            this->next = next;
+            this->value = value;
+        }
+    } *head;
+
+public:
+    List() {
+        size = 0;
+        Node* head = nullptr;
+    };
+    ~List() {};
+    void push_back(int value);
+    void Get_size();
+    int& Get_element(const int index);
+    void delete_element(int value);
+    void add_element(int value, int index);
+    void push_front(int value);
+    void print();
+
+};
+
+void List::push_back(int data)
+{
+    if (head == nullptr) 
+        head = new Node(data);
+    else {
+        Node* current = this->head;
+        for(current = this->head; current->next != nullptr; current = current->next) {};
+        current->next = new Node(data);
+    }
+    size += 1;
+}
+
+void List::Get_size()
+{
+    cout << size << endl;
+}
+
+int& List::Get_element(const int index)
+{
+    Node* current = this-> head;
+    for (int i = 0; i < index; i++) {
+        current = current->next;
+    }
+    return current->value;
+}
+
+void List::delete_element(int value)
+{
+    if ((value < 0) || (value >= size)) {
+        cout << "Ошибка" << endl;
+    }
+    else
+    {
+        if (value == 0) {
+            Node* node_cur = head;
+            Node* temp = node_cur;
+            node_cur = node_cur->next;
+            head = node_cur;
+            delete temp;
+        }
+        else {
+            Node* node_cur = head;
+            for (int i = 0; i < value - 1; i++) {
+                node_cur = node_cur->next;
+            };
+            Node* temp = node_cur->next;
+            node_cur->next = temp->next;
+
+            delete temp;
+        }
+        size = -1;
+    }
+
+}
+
+void List::add_element(int value, int index)
+{
+    if ((index > size) || (index < 0)) {
+        cout << "You tried to add: " << value << " with index: " << index;
+        cout << ". But adding new element is impossible, you are out of range." << endl;
+    }
+    else {
+        Node* node_cur = head;
+        for (int i = 0; i < index - 1; i++) {
+            node_cur = node_cur->next;
+        };
+        Node* element = new Node(value, node_cur->next);
+        node_cur->next = element;
+        size++;
+    }
+}
+void List::push_front(int value)
+{
+    if (head == nullptr) {
+        head = new Node(value);
+
+    }
+    else {
+        Node* node_cur = head;
+        head = new Node(value, node_cur);
+        size++;
+    }
+}
+void List::print()
+{
+    Node* node_cur = head;
+    for (int i = 0; i < size; i++) {
+        cout << (*node_cur).value << endl;
+        node_cur = (*node_cur).next;
+    }
+}
+int main()
+{
+    setlocale(LC_ALL, "ru");
+}
