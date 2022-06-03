@@ -1,0 +1,18 @@
+<RCC>
+    <qresource prefix="/resources">
+        <file>img/icon.ico</file>
+        <file>img/main.jpg</file>
+        <file>img/book.jpg</file>
+        <file>txt/EventList.txt</file>
+        <file>img/check-mark.ico</file>
+        <file>img/WIP.jpg</file>
+        <file>img/portrait.png</file>
+        <file>img/check-mark-hover.ico</file>
+        <file>txt/Karen.txt</file>
+        <file>txt/Christina.txt</file>
+        <file>txt/Alexandro.txt</file>
+        <file>img/victory.ico</file>
+        <file>img/defeat.ico</file>
+        <file>img/energy.ico</file>
+    </qresource>
+</RCC>

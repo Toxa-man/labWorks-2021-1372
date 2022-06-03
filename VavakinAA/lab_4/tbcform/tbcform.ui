@@ -1,0 +1,916 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>TBCform</class>
+ <widget class="QWidget" name="TBCform">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>800</width>
+    <height>600</height>
+   </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>800</width>
+    <height>600</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>Path of Hero</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="resources.qrc">
+    <normaloff>:/resources/img/icon.ico</normaloff>:/resources/img/icon.ico</iconset>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">QWidget#horizontalWidget {border-image: url(:/resources/img/book.jpg)}
+QWidget#Console {
+	font-family: Tempus Sans ITC;
+	font-size: 13px;
+}
+QWidget {
+	font-family: Tempus Sans ITC;
+	font-size: 15px;
+}</string>
+  </property>
+  <layout class="QHBoxLayout" name="horizontalLayout_2">
+   <property name="spacing">
+    <number>0</number>
+   </property>
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
+    <number>0</number>
+   </property>
+   <item>
+    <widget class="QWidget" name="horizontalWidget" native="true">
+     <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,0">
+      <property name="spacing">
+       <number>20</number>
+      </property>
+      <property name="leftMargin">
+       <number>100</number>
+      </property>
+      <property name="topMargin">
+       <number>110</number>
+      </property>
+      <property name="rightMargin">
+       <number>100</number>
+      </property>
+      <property name="bottomMargin">
+       <number>75</number>
+      </property>
+      <item>
+       <layout class="QVBoxLayout" name="verticalLayout">
+        <property name="spacing">
+         <number>5</number>
+        </property>
+        <property name="sizeConstraint">
+         <enum>QLayout::SetMaximumSize</enum>
+        </property>
+        <property name="leftMargin">
+         <number>0</number>
+        </property>
+        <property name="topMargin">
+         <number>0</number>
+        </property>
+        <property name="bottomMargin">
+         <number>10</number>
+        </property>
+        <item>
+         <spacer name="verticalSpacer_2">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeType">
+           <enum>QSizePolicy::Preferred</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item alignment="Qt::AlignHCenter|Qt::AlignVCenter">
+         <widget class="QGroupBox" name="PortraitsBox">
+          <property name="title">
+           <string>Portraits</string>
+          </property>
+          <property name="flat">
+           <bool>true</bool>
+          </property>
+          <layout class="QFormLayout" name="formLayout_2">
+           <property name="labelAlignment">
+            <set>Qt::AlignCenter</set>
+           </property>
+           <property name="formAlignment">
+            <set>Qt::AlignCenter</set>
+           </property>
+           <property name="leftMargin">
+            <number>0</number>
+           </property>
+           <property name="rightMargin">
+            <number>0</number>
+           </property>
+           <property name="bottomMargin">
+            <number>0</number>
+           </property>
+           <item row="2" column="0">
+            <widget class="QProgressBar" name="PlayerHP">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>130</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>130</width>
+               <height>16777215</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QProgressBar {
+	height: 16px;
+    border: 2px solid black;
+    border-radius: 5px;
+	color: white;
+	background-color: rgb(130, 130, 130);
+}
+
+QProgressBar::chunk {
+	background-color: rgb(170, 0, 0);
+	border-radius: 2px;
+}</string>
+             </property>
+             <property name="value">
+              <number>100</number>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignCenter</set>
+             </property>
+             <property name="format">
+              <string>%v</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="1">
+            <widget class="QProgressBar" name="EnemyHP">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>130</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>130</width>
+               <height>16777215</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QProgressBar {
+	height: 16px;
+    border: 2px solid black;
+    border-radius: 5px;
+	color: white;
+	background-color: rgb(130, 130, 130);
+}
+
+QProgressBar::chunk {
+	background-color: rgb(170, 0, 0);
+	border-radius: 2px;
+}</string>
+             </property>
+             <property name="value">
+              <number>0</number>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignCenter</set>
+             </property>
+             <property name="invertedAppearance">
+              <bool>false</bool>
+             </property>
+             <property name="format">
+              <string notr="true">%v</string>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="0">
+            <widget class="QProgressBar" name="PlayerEP">
+             <property name="minimumSize">
+              <size>
+               <width>130</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>130</width>
+               <height>16777215</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QProgressBar {
+	height: 16px;
+    border: 2px solid black;
+    border-radius: 5px;
+	color: white;
+	background-color: rgb(130, 130, 130);
+}
+
+QProgressBar::chunk {
+	background-color: rgb(0, 0, 170);
+	border-radius: 2px;
+}</string>
+             </property>
+             <property name="value">
+              <number>100</number>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignCenter</set>
+             </property>
+             <property name="format">
+              <string>%v</string>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="1">
+            <widget class="QProgressBar" name="EnemyEP">
+             <property name="minimumSize">
+              <size>
+               <width>130</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QProgressBar {
+	height: 16px;
+    border: 2px solid black;
+    border-radius: 5px;
+	color: white;
+	background-color: rgb(130, 130, 130);
+}
+
+QProgressBar::chunk {
+	background-color: rgb(0, 0, 170);
+	border-radius: 2px;
+}</string>
+             </property>
+             <property name="value">
+              <number>0</number>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignCenter</set>
+             </property>
+             <property name="format">
+              <string>%v</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="1">
+            <widget class="QLabel" name="EnemyPortrait">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>90</width>
+               <height>150</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>130</width>
+               <height>200</height>
+              </size>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+             <property name="pixmap">
+              <pixmap resource="resources.qrc">:/resources/img/main.jpg</pixmap>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="0">
+            <widget class="QLabel" name="PlayerPortrait">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>90</width>
+               <height>150</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>130</width>
+               <height>200</height>
+              </size>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+             <property name="pixmap">
+              <pixmap resource="resources.qrc">:/resources/img/main.jpg</pixmap>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item alignment="Qt::AlignHCenter">
+         <widget class="QGroupBox" name="ConsoleBox">
+          <property name="styleSheet">
+           <string notr="true">QScrollBar:vertical {
+	width: 15px;
+	background-color: lightgray;
+}
+</string>
+          </property>
+          <property name="title">
+           <string>Console</string>
+          </property>
+          <property name="flat">
+           <bool>true</bool>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_4">
+           <property name="spacing">
+            <number>0</number>
+           </property>
+           <property name="sizeConstraint">
+            <enum>QLayout::SetMinimumSize</enum>
+           </property>
+           <property name="leftMargin">
+            <number>0</number>
+           </property>
+           <property name="topMargin">
+            <number>0</number>
+           </property>
+           <property name="rightMargin">
+            <number>0</number>
+           </property>
+           <property name="bottomMargin">
+            <number>0</number>
+           </property>
+           <item>
+            <widget class="QTextEdit" name="Console">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>280</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>16777215</width>
+               <height>16777215</height>
+              </size>
+             </property>
+             <property name="layoutDirection">
+              <enum>Qt::LeftToRight</enum>
+             </property>
+             <property name="autoFillBackground">
+              <bool>false</bool>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QTextEdit{
+	background-color: rgba(180, 140, 80, 200);
+	selection-color: black;
+	selection-background-color: white;
+}
+</string>
+             </property>
+             <property name="frameShape">
+              <enum>QFrame::StyledPanel</enum>
+             </property>
+             <property name="frameShadow">
+              <enum>QFrame::Plain</enum>
+             </property>
+             <property name="lineWidth">
+              <number>0</number>
+             </property>
+             <property name="verticalScrollBarPolicy">
+              <enum>Qt::ScrollBarAlwaysOn</enum>
+             </property>
+             <property name="undoRedoEnabled">
+              <bool>false</bool>
+             </property>
+             <property name="readOnly">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <spacer name="verticalSpacer_4">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeType">
+           <enum>QSizePolicy::Preferred</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <layout class="QVBoxLayout" name="verticalLayout_2">
+        <property name="leftMargin">
+         <number>20</number>
+        </property>
+        <property name="topMargin">
+         <number>30</number>
+        </property>
+        <property name="rightMargin">
+         <number>0</number>
+        </property>
+        <property name="bottomMargin">
+         <number>10</number>
+        </property>
+        <item>
+         <spacer name="verticalSpacer_3">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeType">
+           <enum>QSizePolicy::Preferred</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <layout class="QVBoxLayout" name="verticalLayout_3">
+          <item>
+           <widget class="QRadioButton" name="radioButton_1">
+            <property name="maximumSize">
+             <size>
+              <width>150</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QRadioButton::indicator {
+    width: 13px;
+    height: 13px;
+	image: none;
+}
+
+QRadioButton::indicator::checked {
+	image: url(:/resources/img/check-mark.ico);
+}
+
+QRadioButton::indicator::unchecked::hover {
+	image: url(:/resources/img/check-mark-hover.ico);
+}</string>
+            </property>
+            <property name="text">
+             <string>Alexandro, Warrior</string>
+            </property>
+            <property name="checked">
+             <bool>true</bool>
+            </property>
+            <attribute name="buttonGroup">
+             <string notr="true">EnemyButtonGroup</string>
+            </attribute>
+           </widget>
+          </item>
+          <item>
+           <widget class="QRadioButton" name="radioButton_2">
+            <property name="maximumSize">
+             <size>
+              <width>150</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QRadioButton::indicator {
+    width: 13px;
+    height: 13px;
+	image: none;
+}
+
+QRadioButton::indicator::checked {
+	image: url(:/resources/img/check-mark.ico);
+}
+
+QRadioButton::indicator::unchecked::hover {
+	image: url(:/resources/img/check-mark-hover.ico);
+}</string>
+            </property>
+            <property name="text">
+             <string>Christina, Mage</string>
+            </property>
+            <attribute name="buttonGroup">
+             <string notr="true">EnemyButtonGroup</string>
+            </attribute>
+           </widget>
+          </item>
+          <item>
+           <widget class="QRadioButton" name="radioButton_3">
+            <property name="maximumSize">
+             <size>
+              <width>150</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QRadioButton::indicator {
+    width: 13px;
+    height: 13px;
+	image: none;
+}
+
+QRadioButton::indicator::checked {
+	image: url(:/resources/img/check-mark.ico);
+}
+
+QRadioButton::indicator::unchecked::hover {
+	image: url(:/resources/img/check-mark-hover.ico);
+}</string>
+            </property>
+            <property name="text">
+             <string>Karen, Assasin</string>
+            </property>
+            <attribute name="buttonGroup">
+             <string notr="true">EnemyButtonGroup</string>
+            </attribute>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <spacer name="verticalSpacer">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeType">
+           <enum>QSizePolicy::Preferred</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>140</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item alignment="Qt::AlignHCenter|Qt::AlignVCenter">
+         <widget class="QGroupBox" name="ActionButtonsBox">
+          <property name="title">
+           <string>Action Buttons</string>
+          </property>
+          <property name="flat">
+           <bool>true</bool>
+          </property>
+          <property name="checkable">
+           <bool>false</bool>
+          </property>
+          <layout class="QFormLayout" name="formLayout">
+           <property name="fieldGrowthPolicy">
+            <enum>QFormLayout::ExpandingFieldsGrow</enum>
+           </property>
+           <property name="topMargin">
+            <number>11</number>
+           </property>
+           <property name="bottomMargin">
+            <number>0</number>
+           </property>
+           <item row="0" column="0">
+            <widget class="QPushButton" name="AttackButton">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>120</width>
+               <height>40</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>120</width>
+               <height>40</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QPushButton {
+	background-color: qlineargradient(spread:pad, x1:0.609976, y1:0.494, x2:1, y2:1, stop:0 	rgba(180, 140, 80, 200), stop:1 rgba(255, 255, 255, 255));
+	border-radius: 5px;
+	border: 1px solid black;
+}
+
+QPushButton:hover {
+	background-color: qlineargradient(spread:pad, x1:0.609976, y1:0.494, x2:1, y2:1, stop:0 	rgba(180, 140, 80, 255), stop:1 rgba(255, 255, 255, 255));
+ }
+
+QPushButton:pressed {
+	background-color: qlineargradient(spread:pad, x1:0.609976, y1:0.494, x2:1, y2:1, stop:0 	rgba(180, 140, 80, 160), stop:1 rgba(255, 255, 255, 255));
+ }
+</string>
+             </property>
+             <property name="text">
+              <string>Attack</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="1">
+            <widget class="QPushButton" name="DefendButton">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>120</width>
+               <height>40</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>120</width>
+               <height>40</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QPushButton {
+	background-color: qlineargradient(spread:pad, x1:0.609976, y1:0.494, x2:1, y2:1, stop:0 	rgba(180, 140, 80, 200), stop:1 rgba(255, 255, 255, 255));
+	border-radius: 5px;
+	border: 1px solid black;
+}
+
+QPushButton:hover {
+	background-color: qlineargradient(spread:pad, x1:0.609976, y1:0.494, x2:1, y2:1, stop:0 	rgba(180, 140, 80, 255), stop:1 rgba(255, 255, 255, 255));
+ }
+
+QPushButton:pressed {
+	background-color: qlineargradient(spread:pad, x1:0.609976, y1:0.494, x2:1, y2:1, stop:0 	rgba(180, 140, 80, 160), stop:1 rgba(255, 255, 255, 255));
+ }
+</string>
+             </property>
+             <property name="text">
+              <string>Defend</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="0">
+            <widget class="QPushButton" name="WaitButton">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>120</width>
+               <height>40</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>120</width>
+               <height>40</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QPushButton {
+	background-color: qlineargradient(spread:pad, x1:0.609976, y1:0.494, x2:1, y2:1, stop:0 	rgba(180, 140, 80, 200), stop:1 rgba(255, 255, 255, 255));
+	border-radius: 5px;
+	border: 1px solid black;
+}
+
+QPushButton:hover {
+	background-color: qlineargradient(spread:pad, x1:0.609976, y1:0.494, x2:1, y2:1, stop:0 	rgba(180, 140, 80, 255), stop:1 rgba(255, 255, 255, 255));
+ }
+
+QPushButton:pressed {
+	background-color: qlineargradient(spread:pad, x1:0.609976, y1:0.494, x2:1, y2:1, stop:0 	rgba(180, 140, 80, 160), stop:1 rgba(255, 255, 255, 255));
+ }
+</string>
+             </property>
+             <property name="text">
+              <string>Wait</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="1">
+            <widget class="QPushButton" name="PickOpponentButton">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>120</width>
+               <height>40</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>120</width>
+               <height>40</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QPushButton {
+	background-color: qlineargradient(spread:pad, x1:0.609976, y1:0.494, x2:1, y2:1, stop:0 	rgba(180, 140, 80, 200), stop:1 rgba(255, 255, 255, 255));
+	border-radius: 5px;
+	border: 1px solid black;
+}
+
+QPushButton:hover {
+	background-color: qlineargradient(spread:pad, x1:0.609976, y1:0.494, x2:1, y2:1, stop:0 	rgba(180, 140, 80, 255), stop:1 rgba(255, 255, 255, 255));
+ }
+
+QPushButton:pressed {
+	background-color: qlineargradient(spread:pad, x1:0.609976, y1:0.494, x2:1, y2:1, stop:0 	rgba(180, 140, 80, 160), stop:1 rgba(255, 255, 255, 255));
+ }
+</string>
+             </property>
+             <property name="text">
+              <string>Pick opponent</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item alignment="Qt::AlignHCenter|Qt::AlignVCenter">
+         <widget class="QGroupBox" name="NavButtonsBox">
+          <property name="title">
+           <string>Nav Buttons</string>
+          </property>
+          <property name="flat">
+           <bool>true</bool>
+          </property>
+          <layout class="QHBoxLayout" name="horizontalLayout_3">
+           <property name="topMargin">
+            <number>11</number>
+           </property>
+           <property name="bottomMargin">
+            <number>0</number>
+           </property>
+           <item>
+            <widget class="QPushButton" name="MenuButton">
+             <property name="enabled">
+              <bool>true</bool>
+             </property>
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>120</width>
+               <height>40</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>120</width>
+               <height>40</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QPushButton {
+	background-color: qlineargradient(spread:pad, x1:0.609976, y1:0.494, x2:1, y2:1, stop:0 	rgba(180, 140, 80, 200), stop:1 rgba(255, 255, 255, 255));
+	border-radius: 5px;
+	border: 1px solid black;
+}
+
+QPushButton:hover {
+	background-color: qlineargradient(spread:pad, x1:0.609976, y1:0.494, x2:1, y2:1, stop:0 	rgba(180, 140, 80, 255), stop:1 rgba(255, 255, 255, 255));
+ }
+
+QPushButton:pressed {
+	background-color: qlineargradient(spread:pad, x1:0.609976, y1:0.494, x2:1, y2:1, stop:0 	rgba(180, 140, 80, 160), stop:1 rgba(255, 255, 255, 255));
+ }
+</string>
+             </property>
+             <property name="text">
+              <string>Back to Menu</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="QuitButton">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>120</width>
+               <height>40</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>120</width>
+               <height>40</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QPushButton {
+	background-color: qlineargradient(spread:pad, x1:0.609976, y1:0.494, x2:1, y2:1, stop:0 	rgba(180, 140, 80, 200), stop:1 rgba(255, 255, 255, 255));
+	border-radius: 5px;
+	border: 1px solid black;
+}
+
+QPushButton:hover {
+	background-color: qlineargradient(spread:pad, x1:0.609976, y1:0.494, x2:1, y2:1, stop:0 	rgba(180, 140, 80, 255), stop:1 rgba(255, 255, 255, 255));
+ }
+
+QPushButton:pressed {
+	background-color: qlineargradient(spread:pad, x1:0.609976, y1:0.494, x2:1, y2:1, stop:0 	rgba(180, 140, 80, 160), stop:1 rgba(255, 255, 255, 255));
+ }
+</string>
+             </property>
+             <property name="text">
+              <string>Quit Game</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources>
+  <include location="resources.qrc"/>
+ </resources>
+ <connections/>
+ <buttongroups>
+  <buttongroup name="EnemyButtonGroup">
+   <property name="exclusive">
+    <bool>true</bool>
+   </property>
+  </buttongroup>
+ </buttongroups>
+</ui>
