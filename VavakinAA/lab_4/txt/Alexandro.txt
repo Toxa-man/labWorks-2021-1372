@@ -1,0 +1,9 @@
+Gender: Male
+Age: 45
+Race: Dwarf
+Class: Warrior
+Profession: Miner
+HP: 700
+Strength: 2500
+Agility: 1000
+Intelligence: 1200

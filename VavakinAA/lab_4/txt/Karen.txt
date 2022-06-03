@@ -1,0 +1,9 @@
+Gender: Male
+Age: 21
+Race: Orc
+Class: Assasin
+Profession: None
+HP: 650
+Strength: 1500
+Agility: 2500
+Intelligence: 800

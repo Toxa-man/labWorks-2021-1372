@@ -1,0 +1,9 @@
+Gender: Female
+Age: 30
+Race: Elf
+Class: Mage
+Profession: Herbalist
+HP: 600
+Strength: 1000
+Agility: 900
+Intelligence: 2500
