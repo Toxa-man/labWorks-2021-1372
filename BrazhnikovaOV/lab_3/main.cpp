@@ -14,7 +14,7 @@ public:
 		}
 		else {
 			cap = nsize * 2;
-		delete[] Newarr;
+		
 	}
 	void GetSize() {
 		cout << "The size of your massive is ";
@@ -31,29 +31,28 @@ public:
 		
       };
 	void Add_element(int index, int value) {
-		if ((index<=size) && (index>0)) {
-			cap++;
+		if ((index < size) && (index >=0)) {
+			if (size==cap) {
+				int* temporary = Newarr;
+				cap = size * 2;
+				Newarr = new int[cap];
+				for (int i = 0; i < size; i++) {
+					Newarr[i] = temporary[i];
+				}
+				delete[] temporary;
+			}
 			
-			int* temporary = new int(cap);
+			for (int i = size; i != index; i--) {
+				Newarr[i] = Newarr[i-1];
+			}
 			
-			for (int i = 0; i < index; i++)
-			{
-				temporary[i] = Newarr[i];
-			}
-			temporary[index] = value;
-			size++;
-			for (int i = index; i < size+1; i++) {
-				temporary[i+1] = Newarr[i];
-			}
-			Newarr = new int(cap);
-			for (int i = 0; i < size; i++) {
-				Newarr[i] = temporary[i];
-			}
-			delete[] temporary;
+				Newarr[index] = value;
+				
 		}
 		else {
-			cout<< "Mistake/n";
+			cout << "Mistake\n";
 		}
+		size++;
 		
 	};
 	void push_back(const int &el) {
@@ -85,6 +84,9 @@ public:
 			 cout << Newarr[i] << endl; 
 		}
 	}
+		~Dynamic_massive() {
+		delete[] Newarr;
+	}
 	
 };
 class My_List {
@@ -105,7 +107,12 @@ public:
 		size = 0;
 		My_Node* head = nullptr;
 	};
-	~My_List() {};
+	~My_List() {My_Node* temp=head;
+		while (head != nullptr) {
+			temp = head->next;
+			delete head;
+			head = temp;
+		}};
 
 	void push_back(int value);
 	void print();
