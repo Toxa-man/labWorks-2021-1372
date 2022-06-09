@@ -1,0 +1,431 @@
+#include <iostream>
+#include <windows.h> // cursor
+#include<time.h>
+#include<conio.h> // _getch()
+#include <fstream>
+using std::cout;
+using std::cin;
+using std::endl;
+//system("help");
+HANDLE console = GetStdHandle(STD_OUTPUT_HANDLE); // дескриптор консоли
+
+void GoTo(short x, short y) {
+    SetConsoleCursorPosition(console, { x, y });
+} //short: представляет целое число в диапазоне от –32768 до 32767. Занимает в памяти 2 байта
+void cursor_visible(bool see , short size=1) {
+    CONSOLE_CURSOR_INFO info;
+    GetConsoleCursorInfo(console, &info);
+    info.bVisible = see;
+    info.dwSize = size;
+    SetConsoleCursorInfo(console, &info);
+} 
+void delay(int mili_sec) {
+    int c = clock() + mili_sec;
+    while (clock() < c);
+}
+
+class boxes {
+    int x = 0;
+    int y = 0;
+public:
+    void set_box(int x, int y) {
+        this->x = x;
+        this->y = y;
+    }
+    void move_box(int x, int y) {
+        this->x = x;
+        this->y = y;
+        GoTo(x, y);
+    }
+    int get_x() {
+        return x;
+    }
+    int get_y() {
+        return y;
+    }
+};
+boxes box_1;
+boxes box_2;
+boxes box_3;
+
+const int model_ant = 126;
+class creature {
+private:
+    
+    int start_x = 0;
+    int start_y = 0;
+    int curr_x = start_x;
+    int curr_y = start_y;
+public:
+    void set_start_x_y(int x, int y) {
+        start_x = x;
+        curr_x = start_x;
+        start_y = y;
+        curr_y = start_y;
+        GoTo(x, y);
+    }
+    int get_current_x() {
+        return curr_x;
+    }
+    int get_current_y() {
+        return curr_y;
+    }
+    void change_current_x_y(int x, int y) {
+        curr_x = x;
+        curr_y = y;
+        GoTo(x, y);
+    }
+};
+creature ant;
+
+const int model_wall = 178;
+const int height = 30;
+const int width = 120;
+int mass[width][height] = {};
+
+const int num_birds = 30;
+int rand_x_y[num_birds][2] = {};
+int prev_x_y[num_birds][2] = {};
+const int model_bird = 86;
+const int x_left = 90;
+const int y_first = 3;
+
+const int num_crumbs = 5;
+const int model_crumb = 249;
+int mass_crumbs[num_crumbs][2] = { {3,28},{2,26},{43,5},{88,17},{7,14} };
+bool crumb_eaten[num_crumbs] = {}; // 0 - false 
+
+void corners();
+void walls();
+void water();
+void spider_web();
+void create_movable_boxes();
+void create_crumbs();
+
+bool not_wall(int x, int y, int direction);
+bool is_box(int x, int y, int direction);
+bool box_canbe_moved(int x, int y, char direction);
+
+bool water_or_web_or_bird(int x, int y);
+int ant_walks(int score);
+void flock_birds();
+void create_crumbs();
+
+int generate_map(int score) {
+    int curr_score = score;
+    corners();
+    walls();
+    water();
+    spider_web();
+    create_movable_boxes();
+    create_crumbs();
+    return ant_walks(curr_score);
+}
+bool is_end(int x, int y) {
+    if (x == 118 && y == 2) return true;
+    else return false;
+}
+
+int time_changes(int start_time,int score) {
+    flock_birds();
+    int curr_score = generate_map(score);
+    if (water_or_web_or_bird(ant.get_current_x(),ant.get_current_y())) {
+        system("cls");
+        cout << "Game is over!" << endl;
+        return 0;
+    }
+    if (!is_end(ant.get_current_x(), ant.get_current_y())){
+        system("cls");
+        GoTo(ant.get_current_x(), ant.get_current_y());
+        cout << char(model_ant);
+        time_changes(start_time, curr_score);
+    }
+    else {
+        system("cls");
+        
+        cout << "Grat's,you won !!!";
+        cout << " You result is " << time(NULL)-start_time << " seconds and "<< score <<" scores " << endl;
+        return 0;
+    }
+}
+
+int main() {
+    int score = 0;
+    srand(time(NULL));
+    cursor_visible(false);
+    ant.set_start_x_y(2, 28);
+    cout << char(126);
+    box_1.set_box(3, 27);
+    box_2.set_box(14, 6);
+    box_3.set_box(15, 6);
+    int start_time = time(NULL);
+    time_changes(start_time, score);
+}
+
+
+void corners() {
+    SetConsoleTextAttribute(console, FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE);
+    GoTo(0, 0);
+    for (int j = 0; j < height; j++) {
+        for (int i = 0; i < width; i++) {
+            if ((j <= 1 && i < width) || (j == height - 1 || (j == (height - 2) && i >= 4)) || ((i <= 1 && j != (height - 2)) || (i >= 117 && j != 2))) {
+                GoTo(i, j);
+                cout << char(model_wall);  //178 - cтены, 176 - трава
+                mass[i][j] = 1;
+            }
+        }
+    }
+}
+//1
+void walls() {
+    GoTo(0, 0);
+    for (int j = 3; j < (height); j++) {
+        for (int i = 2; i <= int(width / 2); i++) {
+            if ((i == 3 && j == 25) || (j == (height - 3) && i == 2) || (j == (height - 2) && (i == 2) && (ant.get_current_x() > 2 || ant.get_current_y() != 28)) || ((j <= (height - 4) && j >= 5) && (i == 4 || i == 5)) || (j == 3 && (i >= 4 && i <= 45)) || ((j == 4 || j == 5) && i == 42) || (((i == 45 || i == 44) && (j >= 5 || i <= 26))) || (i == 8 && (j >= 7 && j <= 23)) || (j == 26 && (i >= 6 && i <= 10)) || (j == 5 && (i >= 5 && i <= 40)))//
+            {
+                GoTo(i, j);
+                cout << char(model_wall);
+                mass[i][j] = 1;
+            }
+        }
+    }
+}
+//1
+void water() {
+    SetConsoleTextAttribute(console, FOREGROUND_BLUE);
+    for (int j = 7; j <= (height - 4); j++) {
+        for (int i = 14; i <= 43; i++) {
+            GoTo(i, j);
+            cout << char(176);
+            mass[i][j] = 3;
+        }
+    }
+}
+void spider_web() {
+    SetConsoleTextAttribute(console, FOREGROUND_INTENSITY);
+    for (int j = 2; j < (height - 2); j++) {
+        for (int i = 48; i < (width * 3 / 4); i++) {
+            if ((j == 3 && (i <= 88)) || (i == 51 && (j <= 6 && j >= 3)) || (j == 6 && (i <= 54 && i > 51)) || (i == 54 && (j >= 7 && j <= 13)) || (j == 13 && (i == 55 || i == 56)) || (i == 56 && (j >= 14 && j <= 18)) || (j == 18 && (i >= 57 && i < 77)) || (j == 5 && (i <= 88 && i >= 77)) || (i == 88 && j == 4) || (i == 77 && (j >= 6 && j <= 20)) || (j == 20 && (i >= 78 && i <= 86)) || (i == 79 && (j >= 17 && j < 20)) || (j == 17 && (i >= 80 && i <= 88)) || (i == 88 && (j >= 18 && j <= 23)) || (i == 86 && (j >= 21 && j <= 24)) || (i == 80 && (j >= 21 && j <= 24)) || (j == 24 && i >= 81 )) {
+            }
+            else {
+                GoTo(i, j);
+                mass[i][j] = 3;
+                cout << char(253);
+            }
+        }
+    }
+}
+//3 
+void create_movable_boxes() {
+    SetConsoleTextAttribute(console, FOREGROUND_RED | FOREGROUND_GREEN);
+    int x_1 = box_1.get_x();
+    int x_2 = box_2.get_x();
+    int x_3 = box_3.get_x();
+    int y_1 = box_1.get_y();
+    int y_2 = box_2.get_y();
+    int y_3 = box_3.get_y();
+    mass[x_1][y_1] = 4;
+    mass[x_2][y_2] = 4;
+    mass[x_3][y_3] = 4;
+    GoTo(x_1, y_1);
+    cout << char(254);
+    GoTo(x_2, y_2);
+    cout << char(254);
+    GoTo(x_3, y_3);
+    cout << char(254);
+}
+//4 
+void create_crumbs() {
+    SetConsoleTextAttribute(console, FOREGROUND_RED | FOREGROUND_GREEN| FOREGROUND_INTENSITY);
+    for (int i = 0; i < num_crumbs; i++) {
+        if (!crumb_eaten[i]) {
+            mass[mass_crumbs[i][0]][mass_crumbs[i][1]] = 5;
+            GoTo(mass_crumbs[i][0], mass_crumbs[i][1]);
+            cout << char(model_crumb);
+        }
+        else mass[mass_crumbs[i][0]][mass_crumbs[i][1]] = 0;
+    }
+}
+//5
+bool not_wall(int x, int y, int direction) {
+    switch (direction) {
+    case 1: if (mass[x][y - 1] != 1) {
+        return true;
+        break;
+    }
+          else {
+        return false;
+        break;
+    }
+    case 2: if (mass[x][y + 1] != 1) {
+        return true;
+        break;
+    }
+          else {
+        return false;
+        break;
+    }
+    case 3: if (mass[x - 1][y] != 1) {
+        return true;
+        break;
+    }
+          else {
+        return false;
+        break;
+    }
+    case 4: if (mass[x + 1][y] != 1) {
+        return true;
+        break;
+    }
+          else {
+        return false;
+        break;
+    }
+    }
+}
+bool is_box(int x, int y, int direction) {
+    switch (direction) {
+    case 1: if (mass[x][y - 1] == 4) {
+        return true;
+        break;
+    }
+          else {
+        return false;
+        break;
+    }
+    case 2: if (mass[x][y + 1] == 4) {
+        return true;
+        break;
+    }
+          else {
+        return false;
+        break;
+    }
+    case 3: if (mass[x - 1][y] == 4) {
+        return true;
+        break;
+    }
+          else {
+        return false;
+        break;
+    }
+    case 4: if (mass[x + 1][y] == 4) {
+        return true;
+        break;
+    }
+          else {
+        return false;
+        break;
+    }
+    }
+}
+bool box_canbe_moved(int x, int y, char direction) {
+    switch (direction) {
+    case 'w'://up
+        if (not_wall(box_1.get_x(), box_1.get_y(), 1) && is_box(x, y, 1)) {
+            mass[box_1.get_x()][box_1.get_y()] = 0;
+            box_1.move_box(box_1.get_x(), box_1.get_y() - 1);
+            return true;
+            break;
+        }
+        else {
+            return false;
+            break;
+        }
+    case'd'://right
+        if (not_wall(box_3.get_x(), box_3.get_y(), 4) && is_box(x, y, 4)) {
+            mass[box_3.get_x()][box_3.get_y()] = 0;
+            box_3.move_box(box_3.get_x() + 1, box_3.get_y());
+            mass[box_2.get_x()][box_2.get_y()] = 0;
+            box_2.move_box(box_2.get_x() + 1, box_2.get_y());
+            return true;
+            break;
+        }
+        else {
+            return false;
+            break;
+        }
+    }
+}
+bool water_or_web_or_bird(int x, int y) {
+    if (mass[x][y] == 3)return true;
+    else return false;
+}
+int ant_walks(int score) {
+    SetConsoleTextAttribute(console, FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE);
+    char c = _getch();
+    int c_x = ant.get_current_x();
+    int c_y = ant.get_current_y();
+    box_canbe_moved(c_x, c_y, c);
+    switch (c) {
+    case'w'://1
+        if (not_wall(c_x, c_y, 1) && (!is_box(c_x, c_y, 1))) {
+            ant.change_current_x_y(c_x, c_y - 1);
+
+        }
+        break;
+    case 's'://2
+        if (not_wall(c_x, c_y, 2) && (!is_box(c_x, c_y, 2))) {
+            ant.change_current_x_y(c_x, c_y + 1);
+        }
+        break;
+    case'a'://3
+        if (not_wall(c_x, c_y, 3) && (c_x != 0 && c_y != 28) && (!is_box(c_x, c_y, 3))) {
+            ant.change_current_x_y(c_x - 1, c_y);
+        }
+        break;
+    case'd': //4
+        if (not_wall(c_x, c_y, 4) && (!is_box(c_x, c_y, 4))) {
+            ant.change_current_x_y(c_x + 1, c_y);
+        }
+        break;
+    }
+    for (int i = 0; i < num_crumbs; i++) {
+        if (ant.get_current_x() == mass_crumbs[i][0] && ant.get_current_y() == mass_crumbs[i][1] && crumb_eaten[i] == false) {
+            score += 1;
+            crumb_eaten[i] = true;
+        }
+    }
+    return score;
+    //delay(70);
+}
+bool free_space(int x,int y,int direction) {
+    int ant_x = ant.get_current_x();
+    int ant_y = ant.get_current_y();
+    if ( x != ant_x && y != ant_y) {
+        switch (direction) {
+        case 12:
+            if ((y != ant_y+1) && (y!=ant_y-1)&&(x!=ant_x+1)&& (x != ant_x - 1)) return true;
+            else return false;
+            break;
+        case 34:
+            if ( (x != ant_x+1) && (x!=ant_x-1)&&(y!=ant_y+1 )&& (y != ant_y - 1)) return true;
+            else return false;
+            break;
+        }
+    }
+    return false;
+}
+void flock_birds() {
+    SetConsoleTextAttribute(console, FOREGROUND_RED);
+    for (int i = 0; i < num_birds; i++) {
+        rand_x_y[i][0] = x_left + rand() % 27;
+        rand_x_y[i][1] = y_first + rand() % 25;
+        int rand_x = rand_x_y[i][0];
+        int rand_y = rand_x_y[i][1];
+        int dir = 12 + 22 * (rand() % 2);
+        if (free_space(rand_x, rand_y, dir)) {
+            mass[rand_x][rand_y] = 3;
+            GoTo(rand_x, rand_y);
+            cout << char(model_bird);
+        }
+        if (prev_x_y[i][0] == 0 && prev_x_y[i][1] == 0) {
+            prev_x_y[i][0] = rand_x;
+            prev_x_y[i][1] = rand_y;
+        }
+        mass[prev_x_y[i][0]][prev_x_y[i][1]] = 0;
+        prev_x_y[i][0] = rand_x_y[i][0];
+        prev_x_y[i][1] = rand_x_y[i][1];
+    }
+    SetConsoleTextAttribute(console, FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE);
+}
