@@ -48,7 +48,7 @@ public:
 	}
 	void wipe(int index) {
 		if (index >= size) {
-			cout << "Eror" << endl;
+			cout << "Error" << endl;
 		}
 		else {
 			size -= 1;
@@ -65,7 +65,7 @@ public:
 	}
 	int &get_a_link(int index) {
 		if (index >= size) {
-			cout << "Eror" << endl;
+			cout << "Error" << endl;
 		}
 		else {
 			return imp[index];
@@ -92,7 +92,7 @@ public:
 			delete[]lit;
 		}
 		else {
-			cout << "Eror" << endl;
+			cout << "Error" << endl;
 		}
 	}
 	int vector_size() {
