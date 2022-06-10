@@ -116,7 +116,7 @@ public:
 		clear();
 	}
 	void pushfront(T data) {
-		beginning = new ellist<T>(data, head);
+		beginning = new ellist<T>(data, beginning);
 		sizel += 1;
 	}
 	int getsize() {
@@ -152,7 +152,7 @@ public:
 			push_front(data);
 		}
 		else {
-			ellist<T>* tmp = this->head;
+			ellist<T>* tmp = this->beginning;
 			for (int i = 0; i < index - 1; ++i) {
 				tmp = tmp->pnext;
 			}
@@ -194,7 +194,7 @@ private:
 		}
 	}
 	void front() {
-		ellist<T>* tmp = head;
+		ellist<T>* tmp = beginning;
 		beginning = beginning->pnext;
 		delete tmp;
 		sizel -= 1;
